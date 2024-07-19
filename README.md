@@ -6,7 +6,6 @@
 1. Clone repositori:
     ```bash
     git clone https://github.com/fairuzulum/Laravel-API-Management-Product-With-JWT.git
-    cd yourrepository
     ```
 
 2. Install dependencies:
@@ -14,7 +13,7 @@
     composer install
     ```
 
-3. Salin file `.env.example` menjadi `.env` dan sesuaikan variabel lingkungan Anda:
+3. Salin file `.env.example` menjadi `.env` dan sesuaikan variabel:
     ```bash
     cp .env.example .env
     ```
@@ -24,9 +23,9 @@
     php artisan key:generate
     ```
 
-5. Konfigurasi pengaturan database Anda di file `.env`.
+5. Konfigurasi pengaturan database di file `.env`.
 
-6. Publikasikan konfigurasi JWT dan generate JWT secret:
+6. konfigurasi JWT dan generate JWT secret:
     ```bash
     php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
     php artisan jwt:secret
@@ -57,7 +56,7 @@
     php artisan storage:link
     ```
 
-12. Jalankan server pengembangan:
+12. Jalankan laravel:
     ```bash
     php artisan serve
     ```

@@ -20,3 +20,18 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
+Route::middleware('auth.jwt')->group(function () {
+
+    Route::get('products', [ProductController::class, 'index']);
+    Route::get('products/{id}', [ProductController::class, 'show']);
+    Route::post('products', [ProductController::class, 'store']);
+    Route::put('products/{id}', [ProductController::class, 'update']);
+    Route::delete('products/{id}', [ProductController::class, 'destroy']);   
+    
+    Route::get('category-products', [CategoryController::class, 'index']);
+    Route::get('category-products/{id}', [CategoryController::class, 'show']);
+    Route::post('category-products', [CategoryController::class, 'store']);
+    Route::put('category-products/{id}', [CategoryController::class, 'update']);
+    Route::delete('category-products/{id}', [CategoryController::class, 'destroy']);
+});
+

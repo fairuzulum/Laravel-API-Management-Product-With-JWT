@@ -1,64 +1,177 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Management Product API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+## Instalasi
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. Clone repositori:
+    ```bash
+    git clone https://github.com/fairuzulum/Laravel-API-Management-Product-With-JWT.git
+    cd yourrepository
+    ```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2. Install dependencies:
+    ```bash
+    composer install
+    ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+3. Salin file `.env.example` menjadi `.env` dan sesuaikan variabel lingkungan Anda:
+    ```bash
+    cp .env.example .env
+    ```
 
-## Learning Laravel
+4. Generate application key:
+    ```bash
+    php artisan key:generate
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+5. Konfigurasi pengaturan database Anda di file `.env`.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+6. Publikasikan konfigurasi JWT dan generate JWT secret:
+    ```bash
+    php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+    php artisan jwt:secret
+    ```
 
-## Laravel Sponsors
+7. Jalankan migrasi:
+    ```bash
+    php artisan migrate
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+8. Jalankan UserSeeder:
+    ```bash
+    php artisan db:seed UserSeeder
+    ```
 
-### Premium Partners
+9. Jalankan CategorySeeder:
+    ```bash
+    php artisan db:seed CategorySeeder
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+10. Jalankan ProductSeeder:
+    ```bash
+    php artisan db:seed ProductSeeder
+    ```
 
-## Contributing
+11. Buat symbolic link untuk storage:
+    ```bash
+    php artisan storage:link
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+12. Jalankan server pengembangan:
+    ```bash
+    php artisan serve
+    ```
 
-## Code of Conduct
+## Endpoint API
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Autentikasi
 
-## Security Vulnerabilities
+- **Register**
+  - **URL:** `/api/register`
+  - **Metode:** `POST`
+  - **Request Body:**
+    ```json
+    {
+        "email": "user@gmail.com",
+        "password": "password"
+    }
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- **Login**
+  - **URL:** `/api/login`
+  - **Metode:** `POST`
+  - **Request Body:**
+    ```json
+    {
+        "email": "user@gmail.com",
+        "password": "password"
+    }
+    ```
 
-## License
+### Kategori
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Get All Categories**
+  - **URL:** `/api/category-products`
+  - **Metode:** `GET`
+  - **Headers:**
+    - `Authorization: Bearer <token>`
+
+- **Get Category by ID**
+  - **URL:** `/api/category-products/{id}`
+  - **Metode:** `GET`
+  - **Headers:**
+    - `Authorization: Bearer <token>`
+
+- **Create Category**
+  - **URL:** `/api/category-products`
+  - **Metode:** `POST`
+  - **Headers:**
+    - `Authorization: Bearer <token>`
+  - **Request Body:**
+    ```json
+    {
+        "name": "New Category"
+    }
+    ```
+
+- **Update Category**
+  - **URL:** `/api/category-products/{id}`
+  - **Metode:** `PUT`
+  - **Headers:**
+    - `Authorization: Bearer <token>`
+  - **Request Body:**
+    ```json
+    {
+        "name": "Updated Category"
+    }
+    ```
+
+- **Delete Category**
+  - **URL:** `/api/category-products/{id}`
+  - **Metode:** `DELETE`
+  - **Headers:**
+    - `Authorization: Bearer <token>`
+
+### Produk
+
+- **Get All Products**
+  - **URL:** `/api/products`
+  - **Metode:** `GET`
+  - **Headers:**
+    - `Authorization: Bearer <token>`
+
+- **Get Product by ID**
+  - **URL:** `/api/products/{id}`
+  - **Metode:** `GET`
+  - **Headers:**
+    - `Authorization: Bearer <token>`
+
+- **Create Product**
+  - **URL:** `/api/products`
+  - **Metode:** `POST`
+  - **Headers:**
+    - `Authorization: Bearer <token>`
+  - **Request Body (form-data):**
+    - `product_category_id`: `1`
+    - `name`: `New Product`
+    - `price`: `100.00`
+    - `image`: (file)
+
+- **Update Product**
+  - **URL:** `/api/products/{id}`
+  - **Metode:** `PUT`
+  - **Headers:**
+    - `Authorization: Bearer <token>`
+  - **Request Body (form-data):**
+    - `product_category_id`: `1`
+    - `name`: `Updated Product`
+    - `price`: `150.00`
+    - `image`: (file)
+
+- **Delete Product**
+  - **URL:** `/api/products/{id}`
+  - **Metode:** `DELETE`
+  - **Headers:**
+    - `Authorization: Bearer <token>`
+
+
